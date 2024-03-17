@@ -92,6 +92,8 @@ jobs:
           labels: ${{ steps.meta-mastodon.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            MASTODON_VERSION_METADATA=${{ steps.vars.outputs.sha_short }}-${{ steps.vars.outputs.timestamp }}
 
       - name: Build and push Streaming
         uses: docker/build-push-action@v5
