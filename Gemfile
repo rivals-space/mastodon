@@ -208,7 +208,3 @@ gem 'rubyzip', '~> 2.3'
 gem 'hcaptcha', '~> 7.1'
 
 gem 'mail', '~> 2.8'
-
-gem "sentry-ruby"
-gem "sentry-rails"
-gem "sentry-sidekiq"
