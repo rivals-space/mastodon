@@ -28,7 +28,7 @@ gem 'active_model_serializers', '~> 0.10'
 gem 'addressable', '~> 2.8'
 gem 'bootsnap', '~> 1.18.0', require: false
 gem 'browser'
-gem 'charlock_holmes', '~> 0.7.7'
+gem 'charlock_holmes', github: 'TheEssem/charlock_holmes', ref: '226932af4b03eb60d2e31d58b6c3efd72a3ace68'
 gem 'chewy', '~> 7.3'
 gem 'devise', '~> 4.9'
 gem 'devise-two-factor'
@@ -132,7 +132,7 @@ group :test do
   gem 'email_spec'
 
   # Extra RSpec extension methods and helpers for sidekiq
-  gem 'rspec-sidekiq', '~> 4.0'
+  gem 'rspec-sidekiq', '~> 5.0'
 
   # Browser integration testing
   gem 'capybara', '~> 3.39'
@@ -178,7 +178,7 @@ group :development do
 
   # Preview mail in the browser
   gem 'letter_opener', '~> 1.8'
-  gem 'letter_opener_web', '~> 2.0'
+  gem 'letter_opener_web', '~> 3.0'
 
   # Security analysis CLI tools
   gem 'brakeman', '~> 6.0', require: false
