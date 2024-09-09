@@ -898,6 +898,7 @@ tr:
       name: Ad
       newest: En yeni
       oldest: En eski
+      open: Herkese Açık Görüntüle
       reset: Sıfırla
       review: Durumu gözden geçir
       search: Ara
@@ -1453,6 +1454,7 @@ tr:
   media_attachments:
     validations:
       images_and_video: Zaten resim içeren bir duruma video eklenemez
+      not_found: "%{ids} medya dosyaları bulunamadı veya başka bir gönderiye zaten eklenmiş"
       not_ready: İşlemi tamamlanmamış dosyalar eklenemez. Birazdan tekrar deneyin!
       too_many: 4'ten fazla dosya eklenemiyor
   migrations:
@@ -1521,8 +1523,8 @@ tr:
     poll:
       subject: Anket %{name} tarafından sonlandırıldı
     reblog:
-      body: "%{name} durumunuzu boostladı:"
-      subject: "%{name} durumunuzu paylaştı"
+      body: "%{name} durumunuzu yeniden paylaştı:"
+      subject: "%{name} durumunuzu yeniden paylaştı"
       title: Yeni paylaşım
     status:
       subject: "%{name} az önce gönderdi"
@@ -1721,7 +1723,7 @@ tr:
       video:
         one: "%{count} video"
         other: "%{count} videolar"
-    boosted_from_html: "%{acct_link} kişisinden paylaştı"
+    boosted_from_html: "%{acct_link} kişisinden yeniden paylaştı"
     content_warning: 'İçerik uyarısı: %{warning}'
     default_language: Arayüz diliyle aynı
     disallowed_hashtags:
