@@ -79,7 +79,7 @@ module ApplicationHelper
 
   def html_title
     safe_join(
-      [content_for(:page_title).to_s.chomp, title]
+      [content_for(:page_title), title]
       .compact_blank,
       ' - '
     )
@@ -143,7 +143,7 @@ module ApplicationHelper
   end
 
   def body_classes
-    output = body_class_string.split
+    output = []
     output << content_for(:body_classes)
     output << "flavour-#{current_flavour.parameterize}"
     output << "skin-#{current_skin.parameterize}"
@@ -244,12 +244,12 @@ module ApplicationHelper
     preload_pack_asset "locales/#{current_flavour}/#{I18n.locale}-json.js" if supported_locales.include?(I18n.locale.to_s)
   end
 
-  def flavoured_javascript_pack_tag(pack_name, **options)
-    javascript_pack_tag("flavours/#{current_flavour}/#{pack_name}", **options)
+  def flavoured_javascript_pack_tag(pack_name, **)
+    javascript_pack_tag("flavours/#{current_flavour}/#{pack_name}", **)
   end
 
-  def flavoured_stylesheet_pack_tag(pack_name, **options)
-    stylesheet_pack_tag("flavours/#{current_flavour}/#{pack_name}", **options)
+  def flavoured_stylesheet_pack_tag(pack_name, **)
+    stylesheet_pack_tag("flavours/#{current_flavour}/#{pack_name}", **)
   end
 
   def preload_signed_in_js_packs
