@@ -41,7 +41,8 @@ class Status < ApplicationRecord
   include Status::SnapshotConcern
   include Status::ThreadingConcern
 
-  MEDIA_ATTACHMENTS_LIMIT = 4
+  MEDIA_ATTACHMENTS_LIMIT = (ENV['MAX_MEDIA_ATTACHMENTS'] || 4).to_i
+  REMOTE_MEDIA_ATTACHMENTS_LIMIT = (ENV['MAX_REMOTE_MEDIA_ATTACHMENTS'] || 16).to_i
 
   rate_limit by: :account, family: :statuses
 
@@ -305,6 +306,10 @@ class Status < ApplicationRecord
     end
   end
 
+  def media_attachments_limit
+    local? ? MEDIA_ATTACHMENTS_LIMIT : REMOTE_MEDIA_ATTACHMENTS_LIMIT
+  end
+
   def ordered_media_attachments
     if ordered_media_attachment_ids.nil?
       # NOTE: sort Ruby-side to avoid hitting the database when the status is
@@ -313,7 +318,7 @@ class Status < ApplicationRecord
     else
       map = media_attachments.index_by(&:id)
       ordered_media_attachment_ids.filter_map { |media_attachment_id| map[media_attachment_id] }
-    end.take(MEDIA_ATTACHMENTS_LIMIT)
+    end.take(media_attachments_limit)
   end
 
   def replies_count

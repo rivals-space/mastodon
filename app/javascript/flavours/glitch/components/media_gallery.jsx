@@ -16,6 +16,14 @@ import { formatTime } from 'flavours/glitch/features/video';
 
 import { autoPlayGif, displayMedia, useBlurhash } from '../initial_state';
 
+const colCount = function(size) {
+  return Math.max(Math.ceil(Math.sqrt(size)), 2);
+};
+
+const rowCount = function(size) {
+  return Math.ceil(size / colCount(size));
+};
+
 class Item extends PureComponent {
 
   static propTypes = {
@@ -88,14 +96,18 @@ class Item extends PureComponent {
     let badges = [], thumbnail;
 
     let width  = 50;
-    let height = 100;
+    let height = 50;
 
-    if (size === 1) {
+    const cols = colCount(size);
+    const remaining = (-size % cols + cols) % cols;
+    const largeCount = Math.floor(remaining / 3); // width=2, height=2
+    const mediumCount = remaining % 3; // height=2
+
+    if (size === 1 || index < largeCount) {
       width = 100;
-    }
-
-    if (size === 4 || (size === 3 && index > 0)) {
-      height = 50;
+      height = 100;
+    } else if (size === 2 || index < largeCount + mediumCount) {
+      height = 100;
     }
 
     const description = attachment.getIn(['translation', 'description']) || attachment.get('description');
@@ -107,7 +119,7 @@ class Item extends PureComponent {
     if (attachment.get('type') === 'unknown') {
       return (
         <div className={classNames('media-gallery__item', { standalone, 'media-gallery__item--tall': height === 100, 'media-gallery__item--wide': width === 100 })} key={attachment.get('id')}>
-          <a className='media-gallery__item-thumbnail' href={attachment.get('remote_url') || attachment.get('url')} style={{ cursor: 'pointer' }} title={description} lang={lang} target='_blank' rel='noopener noreferrer'>
+          <a className='media-gallery__item-thumbnail' href={attachment.get('remote_url') || attachment.get('url')} style={{ cursor: 'pointer' }} title={description} lang={lang} target='_blank' rel='noopener'>
             <Blurhash
               hash={attachment.get('blurhash')}
               className='media-gallery__preview'
@@ -139,7 +151,7 @@ class Item extends PureComponent {
           href={attachment.get('remote_url') || originalUrl}
           onClick={this.handleClick}
           target='_blank'
-          rel='noopener noreferrer'
+          rel='noopener'
         >
           <img
             className={letterbox ? 'letterbox' : null}
@@ -325,6 +337,11 @@ class MediaGallery extends PureComponent {
     if (this.isStandaloneEligible()) { // TODO: cropImages setting
       style.aspectRatio = `${this.props.media.getIn([0, 'meta', 'small', 'aspect'])}`;
     } else {
+      const cols = colCount(media.size);
+      const rows = rowCount(media.size);
+      style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
       style.aspectRatio = '16 / 9';
     }
 
